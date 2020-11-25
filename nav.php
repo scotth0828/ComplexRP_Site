@@ -5,8 +5,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Features</a>
@@ -33,3 +33,15 @@
     </ul>
   </div>
 </nav>
+
+<script>
+  $(document).ready(function() {
+    $('.nav-link').each(function() {
+      var p = $(location).attr('pathname').split('/');
+      var loc = p[p.length-1];
+      if (loc === $(this).attr('href')) {
+        $(this).css('color', 'white');
+      }
+    });
+  });
+</script>

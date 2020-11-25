@@ -15,6 +15,19 @@
 
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 
+		<script>
+			var p = $(location).attr('pathname').split('/');
+			var pp = p[p.length-1].split('.');
+			var ppp = pp[0];
+			var pppp = ppp.substr(0,1).toUpperCase() + ppp.substr(1);
+
+			$(document).ready(function() {
+				if (pppp === 'Index') pppp = 'Home';
+		        document.title = 'ComplexRP - ' + pppp + ' Page';
+		    });
+			
+		</script>
+
 	</head>
 	<body>
 	<div class="container-fluid col-md-12" style="background-color: #e8e8e8;">
