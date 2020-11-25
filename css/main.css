@@ -1,0 +1,101 @@
+/* --- GLOBALS --- */
+
+.container-fluid {
+    padding: 0;
+    margin-right:auto;
+    margin-left:auto;
+    overflow: hidden;
+ }
+
+.row {
+	margin: 0;
+}
+
+body {
+	width: 100%;
+	margin: 0;
+}
+
+/* --- BANNER --- */
+
+.banner-container {
+	--border: 1px hidden white;
+	padding: 80px;
+
+	height: 70%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+.banner-container-inner {
+	text-align: center;
+	width: 100%;
+	color: #f05454;
+	height: auto;
+}
+
+ .banner-container-inner h1 {
+ 	font-size: 8vw;
+ 	font-family: "Shadows into Light", sans-serif;
+ }
+
+ .banner-container-inner h2 {
+ 	margin-top: 0px;
+ 	font-family: "Source Sans Pro", sans-serif;
+ 	font-size: 3.5vw;
+ 	text-align: center;
+ 	font-weight: 100;
+ }
+
+ .banner-container-inner a {
+ 	margin-top: 20px;
+ 	font-size: 1.3em;
+ 	font-family: "Source Sans Pro", sans-serif;
+
+ }
+
+ .banner-container-inner .btn {
+ 	display: inline-block;
+ 	width: 200px;
+ 	font-weight: bold;
+ 	padding: 10px;
+ 	color: #f05454;
+ 	border: 4px solid #fff;
+ 	text-align: center;
+ 	outline: none;
+ 	text-decoration: none;
+ 	transition: background-color 0.2s ease-out, color 0.2s ease-out;
+ }
+
+ .banner-container-inner .btn:hover,.btn:active {
+ 	background-color: #fff;
+ 	color: #000;
+ 	transition: background-color 0.3s ease-in, color 0.3s ease-in;
+ }
+
+ /* -- CONTENT -- */
+
+ content {
+ 	padding: 0 100px;
+ }
+
+/* --- FOOTER --- */
+
+footer {
+	color: white;
+}
+
+footer a, a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+footer hr {
+	background-color: rgb(111, 69, 229);
+}
+
+.footer-copyright {
+	background-color: rgb(22, 28, 39);
+}
