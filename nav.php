@@ -25,7 +25,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="https://github.com/scotth0828/ComplexRP_Site">Repository</a>
+        <a class="nav-link" target="_blank" href="https://github.com/scotth0828/ComplexRP_Site">Repository</a>
       </li>
       <ul class="nav navbar-nav navbar-right">
         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
