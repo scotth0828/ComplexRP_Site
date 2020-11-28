@@ -11,6 +11,10 @@ class account {
 	public function __construct() {
 		$this->DB = new DB();
 		$this->cookies = new cookies();
+
+		$this->createLoginTokensTable();
+		$this->createUserTable();
+
 	}
 
 	function verify($username, $password) {
@@ -68,7 +72,6 @@ class account {
 		)');
 			return true;
 		} catch (Exception $e) {
-			echo '<script>console.log("Failed to create login tokens table.");</script>';
 			return false;
 		}
 	}
@@ -88,7 +91,6 @@ class account {
 )');
 			return true;
 		} catch (Exception $e) {
-			echo '<script>console.log("Failed to create user table.");</script>';
 			return false;
 		}
 	}
