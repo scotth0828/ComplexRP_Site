@@ -40,7 +40,7 @@ if (isset($_POST['register'])) {
 
 											// ACCOUNT CREATED AND LOGGED IN
 											$userid = DB::query('SELECT id FROM users WHERE username=:username', array(':username'=>$username));
-											createLoginCookies($userid);
+											$acc->createLoginCookies($userid);
 
 											header('Location: index.php');
 										} else {
