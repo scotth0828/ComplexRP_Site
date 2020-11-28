@@ -138,3 +138,13 @@ footer hr {
 	color: blue;
 }
 
+.navbar {
+	position: relative;
+}
+
+@media (min-width: 992px) {
+	.navbar-right {
+		position: absolute;
+		right: 10px;
+	}
+}
