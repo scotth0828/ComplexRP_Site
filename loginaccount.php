@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 
 			$user_id = DB::query('SELECT id FROM users WHERE username=:username', array(':username'=>$username))[0]['id'];
 			echo '<script>alert("'.$user_id.'");</script>';
-			$acc->createLoginCookes($user_id);
+			$acc->createLoginCookies($user_id);
 
 			header('Location: index.php');
 		} else {

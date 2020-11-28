@@ -98,7 +98,7 @@ class account {
 		}
 	}
 
-	public function createLoginCookes($userid) {
+	public function createLoginCookies($userid) {
 		try {
 			$token = $this->createToken();
 			$encryptedToken = $this->encryptedToken($token);
