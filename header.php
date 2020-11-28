@@ -1,3 +1,7 @@
+<?php
+require 'classes/account.php';
+$acc = new account();
+?>
 <!DOCTYPE html>
 	<html>
 	<head>

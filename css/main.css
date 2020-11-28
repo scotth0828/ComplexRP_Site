@@ -111,10 +111,22 @@ footer hr {
 
 }
 
+
 .loginform #signinlabel {
-	float: left;
+	width: 100%;
+	text-align: left;
 	font-size: 50px;
-	margin-left: 5px;
+}
+
+
+.loginErrorMessage {
+	background-color: rgb(250, 50, 50, 100);
+	
+	margin-bottom: 10px;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 1px;
+	color: white;
 }
 
 .fplink {
@@ -125,3 +137,4 @@ footer hr {
 	text-decoration: none;
 	color: blue;
 }
+

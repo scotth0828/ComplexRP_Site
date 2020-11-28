@@ -27,9 +27,23 @@
       <li class="nav-item">
         <a class="nav-link" target="_blank" href="https://github.com/scotth0828/ComplexRP_Site">Repository</a>
       </li>
+      
       <ul class="nav navbar-nav navbar-right">
+        <?php
+      if (!$acc->isLoggedIn()) {
+      ?>
         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="signup.php">Sign Up</a></li>
+        <?php
+      } else {
+      ?>
+        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="signout.php">Sign Out</a></li>
+      <?php
+      }
+      ?>
       </ul>
+      
     </ul>
   </div>
 </nav>

@@ -22,19 +22,25 @@ function getValue($key) {
 <content class="container text-center">
 
 <div class="col-md-4 col-md-offset-4 loginform">
-	<form action="loginaccount.php" method="POST">
-		<label id="signinlabel">Sign In</label>
+	<form action="createaccount.php" method="POST">
+		<label id="signinlabel">Sign Up</label>
 		<div class="loginErrorMessage"><p><?php echo getValue('errormessage'); ?></p></div>
 		<div class="form-group">
-			<input name="username" type="text" class="form-control" id="username" placeholder="Username">
+			<input name="username" type="text" class="form-control" id="username" placeholder="Username" value="<?php echo getValue('username'); ?>">
+		</div>
+		<div class="form-group">
+			<input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo getValue('email'); ?>">
 		</div>
 		<div class="form-group">
 			<input name="password" type="password" class="form-control" id="password" placeholder="Password">
 		</div>
-		<div class="fplink">
-			<a href="#">Forgot Password?</a>
+		<div class="form-group">
+			<input name="confirmpassword" type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password">
 		</div>
-		<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+		<div class="form-group">
+			<input name="birthdate" type="date" class="form-control" id="birthdate" placeholder="birthdate" value="<?php echo getValue('birthdate'); ?>">
+		</div>
+		<button name="register" type="submit" class="btn btn-primary">Register</button>
 	</form>
 </div>
 
@@ -49,4 +55,5 @@ if (getValue('errormessage') === '') {
 	</script>
 	<?php
 }
+
 include 'footer.php'; ?>
