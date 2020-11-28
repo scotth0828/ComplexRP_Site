@@ -3,7 +3,7 @@
 class DB {
 	private static function connect() {
 		try {
-			$pdo = new PDO('mysql:host=127.0.0.1;dbname=accounts;charset=utf8', 'root', '');
+			$pdo = new PDO('mysql:host=127.0.0.1;dbname=eventhorizon;charset=utf8', 'root', '');
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return $pdo;
 		} catch (PDOException $e) {
