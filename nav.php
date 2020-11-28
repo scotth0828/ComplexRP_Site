@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #222831;">
-  <a class="navbar-brand" href="index.php">ComplexRP</a>
+  <a class="navbar-brand" href="index.php">Event Horizon</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -28,13 +28,15 @@
         <?php
       if (!$acc->isLoggedIn()) {
       ?>
-        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-        <li class="nav-item"><a class="nav-link" href="signup.php">Sign Up</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="signup.php"><i class="fas fa-user-plus"></i> Sign Up</a></li>
         <?php
       } else {
       ?>
-        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
-        <li class="nav-item"><a class="nav-link" href="signout.php">Sign Out</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-alt"></i> Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="signout.php"><i class="fas fa-door-open"></i>
+
+ Sign Out</a></li>
       <?php
       }
       ?>

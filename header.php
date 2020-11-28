@@ -5,7 +5,7 @@ $acc = new account();
 <!DOCTYPE html>
 	<html>
 	<head>
-		<title>ComplexRP</title>
+		<title>Event Horizon</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,7 +27,7 @@ $acc = new account();
 
 			$(document).ready(function() {
 				if (pppp === 'Index') pppp = 'Home';
-		        document.title = 'ComplexRP - ' + pppp + ' Page';
+		        document.title = 'Event Horizon - ' + pppp + ' Page';
 		    });
 			
 		</script>

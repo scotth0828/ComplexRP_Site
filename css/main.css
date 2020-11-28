@@ -16,6 +16,12 @@ body {
 	margin: 0;
 }
 
+.content {
+	padding: 30px 20px;
+	height: 500px;
+}
+
+
 /* --- BANNER --- */
 
 .banner-container {
@@ -101,7 +107,7 @@ footer hr {
 }
 
 .loginform {
-	background-color: white;
+	background-color: #30475e;
 	border-radius: 5px;
 	margin: auto;
 	padding: 5px;
@@ -114,8 +120,9 @@ footer hr {
 
 .loginform #signinlabel {
 	width: 100%;
-	text-align: left;
+	--text-align: left;
 	font-size: 50px;
+	color: white;
 }
 
 
@@ -133,9 +140,13 @@ footer hr {
 	padding-bottom: 10px;
 }
 
+.fplink a {
+	color: rgb(245, 245, 245);
+}
+
 .fplink a:hover {
 	text-decoration: none;
-	color: blue;
+	color: white;
 }
 
 .navbar {
@@ -147,4 +158,50 @@ footer hr {
 		position: absolute;
 		right: 10px;
 	}
+}
+
+.welcomemessage {
+	background-color: white;
+	padding-left: 5px;
+	line-height: 50px;
+	font-weight: 600;
+}
+
+.icon-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: #f05454;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+
+}
+
+.icon-field {
+  width: 100%;
+  padding: 15px;
+  outline: none;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], textarea {
+outline: none;
+box-shadow: .5px 0px #f05454 !important;
+border:1px solid #f05454 !important;
+border-radius: 0px 10px 10px 0px;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #f05454 !important;
+    outline: none;
+    border: none;
+}
+
+.btn-primary:hover {
+	background-color: #ba5454 !important;
 }

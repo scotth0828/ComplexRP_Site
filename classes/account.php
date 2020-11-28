@@ -23,6 +23,20 @@ class account {
 		return false;
 	}
 
+	function getUsername($userid) {
+		return DB::query('SELECT username FROM users WHERE id=:id LIMIT 1', array(':id'=>$userid))[0]['username'];
+	}
+
+	function getID() {
+		$cookie = $this->cookies->getCookie('SNID');
+		if ($cookie != NULL) {
+			$enct = $this->encryptedToken($cookie);
+			$query = $this->DB::query('SELECT user_id FROM logintokens WHERE value=:token LIMIT 1', array(':token'=>$enct));
+			return $query[0]['user_id'];
+		}
+		return 0;
+	}
+
 	function isLoggedIn() {
 		$cookie = $this->cookies->getCookie('SNID');
 		if ($cookie != NULL) { 
