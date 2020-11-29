@@ -1,6 +1,7 @@
 <?php
 require 'classes/account.php';
 $acc = new account();
+$cookie = new cookies();
 ?>
 <!DOCTYPE html>
 	<html>
@@ -18,6 +19,7 @@ $acc = new account();
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/profile.css">
 
 		<script>
 			var p = $(location).attr('pathname').split('/');

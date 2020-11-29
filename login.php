@@ -3,6 +3,8 @@
 if ($acc->isLoggedIn())
 	header('Location: index.php');
 
+$remember = $cookie->getCookie('remembermeusername');
+
 function getValue($key) {
 	$url = $_SERVER['QUERY_STRING'];
 	$decoded = urldecode($url);
@@ -28,7 +30,7 @@ function getValue($key) {
 		<div class="form-group">
 			<div class="icon-container">
 				<i class="fa fa-user icon"></i>
-				<input name="username" type="text" class="form-control icon-field" id="username" placeholder="Username">
+				<input name="username" type="text" class="form-control icon-field" id="username" placeholder="Username" value="<?php if ($remember != NULL) echo $remember; ?>">
 			</div>
 		</div>
 		<div class="form-group">
@@ -37,6 +39,10 @@ function getValue($key) {
 				<input name="password" type="password" class="form-control" id="password" placeholder="Password">
 			</div>
 		</div>
+		<div class="form-group form-check rememeberme">
+		    <input name="rememberme" type="checkbox" class="form-check-input remembermeinput">
+		    <label class="form-check-label remembermelabel" for="exampleCheck1">Remember me</label>
+		  </div>
 		<div class="fplink">
 			<a href="#">Forgot Password?</a>
 		</div>
@@ -46,7 +52,13 @@ function getValue($key) {
 
 </div>
 
-<?php 
+<?php
+
+if ($remember != NULL) {
+?>
+<script>$('.remembermeinput').prop('checked', 'true');</script>
+<?php
+}
 
 if (getValue('errormessage') === '') {
 	?>

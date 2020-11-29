@@ -33,7 +33,7 @@
         <?php
       } else {
       ?>
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-alt"></i> Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user-alt"></i> Profile</a></li>
         <li class="nav-item"><a class="nav-link" href="signout.php"><i class="fas fa-door-open"></i>
 
  Sign Out</a></li>

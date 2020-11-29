@@ -12,20 +12,31 @@ if (isset($_POST['submit'])) {
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
+	$rememberme = '';
 
-	if (!empty($username) && !empty($password)) {
+	try {
+		if (!isset($_POST['rememberme'])) $rememberme = false; else $rememberme = true;
+	} catch(Exception $e) {$rememberme = false;}
+
+	if (!empty($username) || !empty($password)) {
 		if ($acc->verify($username, $password)) {
 			// account verified
 
+			if($rememberme)
+				$cookie->setCookie('remembermeusername', $username, $cookie->TIME_MONTH);
+			else
+				$cookie->removeCookie('remembermeusername');
+				
+
 			$user_id = DB::query('SELECT id FROM users WHERE username=:username', array(':username'=>$username))[0]['id'];
-			echo '<script>alert("'.$user_id.'");</script>';
 			$acc->createLoginCookies($user_id);
 
 			header('Location: index.php');
-		} else {
-			ErrorMessage('Account credentials incorrect or account does not exist!');
 		}
 	}
+	echo '<script>alert("this is true");</script>';
+			$cookie->removeCookie('remembermeusername');
+			ErrorMessage('Account credentials incorrect or account does not exist!');
 }
 
 function ErrorMessage($message) {

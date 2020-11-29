@@ -205,3 +205,15 @@ border-radius: 0px 10px 10px 0px;
 .btn-primary:hover {
 	background-color: #ba5454 !important;
 }
+
+.rememberme {
+
+}
+
+.remembermeinput {
+
+}
+
+.remembermelabel {
+	color: white;
+}

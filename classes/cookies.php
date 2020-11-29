@@ -30,14 +30,14 @@ class cookies {
 
 	public function removeCookie($name) {
 		if ($this->isValid($name)) {
-			setcookie($name, "", time() - $this->TIME_HOUR);
+			setcookie($name, "", time() - $this->TIME_HOUR, "/");
 			return true;
 		}
 		return false;
 	}
 
 	public function isCookieEnabled() {
-		setCookie("test_cookie", "test", $this->TIME_HOUR);
+		setCookie("test_cookie", "test", $this->TIME_HOUR, "/");
 		if(count($_COOKIE) > 0) {
 			return true;
 		}
