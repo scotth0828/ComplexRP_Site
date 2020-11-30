@@ -7,8 +7,7 @@ $bio = 'deafault bio description';
 
 if ($id != 0) {
 	$tag = '@'.$acc->getUsername($id);
-	$filePath = 'avatars/'.$id.'.jpg';
-	if (file_exists($filePath)) $avatar = $filePath;
+	$avatar = $acc->getAvatar($id);
 }
 
 ?>

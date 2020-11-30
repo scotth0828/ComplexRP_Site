@@ -31,6 +31,10 @@ class account {
 		return DB::query('SELECT username FROM users WHERE id=:id LIMIT 1', array(':id'=>$userid))[0]['username'];
 	}
 
+	function getAvatar($userid) {
+		return DB::query('SELECT profileimg FROM users WHERE id=:id LIMIT 1', array(':id'=>$userid))[0]['profileimg'];
+	}
+
 	function getID() {
 		$cookie = $this->cookies->getCookie('SNID');
 		if ($cookie != NULL) {
@@ -79,16 +83,16 @@ class account {
 	public function createUserTable() {
 		try {
 			$this->DB::query('CREATE TABLE users (
-		id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-		username VARCHAR(32) NOT NULL,
-		password VARCHAR(60) NOT NULL,
-		email TEXT NOT NULL,
-		role VARCHAR(32) NOT NULL,
-		birthdate DATE NOT NULL,
-		verified TINYINT(1) NOT NULL,
-		profileimg VARCHAR(255)
+			id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+			username VARCHAR(32) NOT NULL,
+			password VARCHAR(60) NOT NULL,
+			email TEXT NOT NULL,
+			role VARCHAR(32) NOT NULL,
+			birthdate DATE NOT NULL,
+			verified TINYINT(1) NOT NULL,
+			profileimg VARCHAR(255)
 
-)');
+			)');
 			return true;
 		} catch (Exception $e) {
 			return false;
