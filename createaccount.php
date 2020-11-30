@@ -1,5 +1,5 @@
 <?php
-include 'classes/account.php';
+include 'libraries/account.php';
 
 if (isset($_POST['register'])) {
 

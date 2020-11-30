@@ -1,6 +1,6 @@
 <?php
 include 'header.php'; 
-include 'classes/Image.php';
+include 'libraries/Image.php';
 
 $id = $acc->getID();
 if (isset($_POST['submitAvatar']))

@@ -1,5 +1,5 @@
 <?php
-require 'classes/account.php';
+require 'libraries/account.php';
 $acc = new account();
 $cookie = new cookies();
 ?>

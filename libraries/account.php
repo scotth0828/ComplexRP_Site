@@ -1,7 +1,7 @@
 <?php 
 
-include 'classes/DB.php';
-include 'classes/cookies.php';
+include 'DB.php';
+include 'cookies.php';
 
 class account {
 

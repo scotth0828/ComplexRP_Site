@@ -2,8 +2,8 @@
 
 if (isset($_POST['submit'])) {
 
-	require_once 'classes/account.php';
-	require_once 'classes/cookies.php';
+	require_once 'libraries/account.php';
+	require_once 'libraries/cookies.php';
 
 	$acc = new account();
 	$acc->createLoginTokensTable();
