@@ -19,7 +19,7 @@
           Repository
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" target="_blank" href="https://github.com/scotth0828/ComplexRP_Site">Site</a>
+          <a class="dropdown-item" target="_blank" href="https://github.com/scotth0828/EventHorizon">Site</a>
           <a class="dropdown-item" target="_blank" href="https://github.com/Karutoh/ComplexRP">Gamemode</a>
         </div>
       </li>
