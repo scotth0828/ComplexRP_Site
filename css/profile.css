@@ -95,3 +95,32 @@
 	padding-top:10px;
 	display: inline-block;
 }
+
+.profile-posts-container {
+	width: 100%;
+	height: 100%;
+}
+
+.profile-posts-container header {
+	background-color: white;
+}
+
+.profile-editform {
+	--border: 1px solid black;
+	text-align: center;
+	width: 60%;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.profile-editform form {
+	display: inline-block;
+	margin: 0;
+}
+
+.profile-editform form p {
+	border: 1px solid black;
+	display: inline-block;
+	margin-right: 5px;
+	height: 100%;
+}

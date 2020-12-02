@@ -48,7 +48,9 @@ if ($id != 0) {
       <div class="bio"><?php echo $bio; ?></div>
     </div>
     <div class="col-md-8">
-      Two of two columns
+      <div class="profile-posts-container">
+        <header><h1>Recent Activity</h1></header>
+      </div>
     </div>
   </div>
 </div>

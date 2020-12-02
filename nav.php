@@ -9,10 +9,7 @@
         <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="#">Forum</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,10 +30,24 @@
         <?php
       } else {
       ?>
-        <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user-alt"></i> Profile</a></li>
-        <li class="nav-item"><a class="nav-link" href="signout.php"><i class="fas fa-door-open"></i>
+      <li class="nav-item dropdown dropdown-user">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="dropdown-user-menu-item">
+          <?php 
+          $id = $acc->getID();
+          $username = $acc->getUsername($id);
+          $avatar = $acc->getAvatar($id);
+          echo '<img id="avatar" src="'.$avatar.'"></img>';
+          echo '<p>'.$username.'</p>';
 
- Sign Out</a></li>
+           ?>
+          </div>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" target="" href="profile.php">Profile</a>
+          <a class="dropdown-item" target="" href="signout.php">Sign Out</a>
+        </div>
+      </li>
       <?php
       }
       ?>
