@@ -2,11 +2,12 @@
 include 'header.php'; 
 include 'libraries/Image.php';
 
-$id = $acc->getID();
+$id = Account::getData(Account::ID);
+echo $id;
 if (isset($_POST['submitAvatar']))
-  Image::uploadImage('avatarupload', 'UPDATE users SET profileimg=:avatarupload WHERE id=:userid', array(':userid'=>$id));
+  Image::uploadImage('avatarupload', 'UPDATE accounts SET profileimg=:avatarupload WHERE id=:userid', array(':userid'=>$id));
 if (isset($_POST['submitBanner']))
-  //Image::uploadImage('bannerUpload', 'UPDATE users SET profileimg=:bannerUpload WHERE id=:userid', array(':userid'=>$id)); // create database for profile
+  //Image::uploadImage('bannerupload', 'UPDATE users SET profileimg=:bannerupload WHERE id=:userid', array(':userid'=>$id)); // create database for profile
 ?>
 
 <style>.content { padding: 0px; }</style>
@@ -15,11 +16,11 @@ if (isset($_POST['submitBanner']))
 
 <div class="content">
 
-<div class="profile-editform container-fluid">
+<div class="profile-editform">
 
 <div id="avatar">
 	<form action="" method="post" enctype="multipart/form-data">
-	  <p>Select image to upload:</p>
+	  <label for="avatarlabel">Set your avatar image here</label>
 	  <input type="file" name="avatarupload" id="avatarupload" accept='image/jpeg'>
 	  <input class="btn btn-primary" type="submit" value="Upload Image" name="submitAvatar">
 	</form>
@@ -27,18 +28,20 @@ if (isset($_POST['submitBanner']))
 <hr>
 <div id="banner">
 	<form action="" method="post" enctype="multipart/form-data">
-	  <p>Select image to upload:</p>
-	  <input type="file" name="bannerUpload" id="bannerUpload" accept='image/jpeg'>
+	  <label for="bannerlabel">Set your banner image here</label>
+	  <input type="file" name="bannerUpload" id="bannerupload" accept='image/jpeg'>
 	  <input class="btn btn-primary" type="submit" value="Upload Image" name="submitBanner">
 	</form>
 </div>
 <hr>
-<div id="biography"></div>
-	<form>
-		<p>Enter your biography</p>
-		<textarea name="message" rows="10" cols="30">The cat was playing in the garden.</textarea>
+<div id="biography">
+	<form class="form-group">
+		<label for="biolabel">Enter your biography here</label>
+		<textarea class="form-control" name="message" rows="3" >The cat was playing in the garden.</textarea>
 		<input class="btn btn-primary" type="submit" value="Set Biography" name="submitBio">
 	</form>
+</div>
+
 </div>
 
 </div>

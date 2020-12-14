@@ -1,4 +1,6 @@
-
+.pcontent {
+	height: 1000px;
+}
 
 .profilebanner {
 	background-image: url('../images/banner.jpg');
@@ -59,25 +61,25 @@
 }
 
 .profilecontent {
-	border: 1px solid cyan;
+	margin-top: 10em;
 }
 
 .profilecontent .container {
-	border: 1px solid blue;
+	--border: 1px solid blue;
 	max-width: 80%;
 }
 
 .profilecontent .container .row{
-	border: 1px solid red;
+	--border: 1px solid red;
 }
 
 .profilecontent .container .col-md-4 {
-	border: 1px solid orange;
+	--border: 1px solid orange;
 	text-align: center;
 }
 
 .profilecontent .container .col-md-8 {
-	border: 1px solid green;
+	--border: 1px solid green;
 	text-align: center;
 }
 
@@ -105,6 +107,7 @@
 	background-color: white;
 }
 
+/*
 .profile-editform {
 	--border: 1px solid black;
 	text-align: center;
@@ -112,15 +115,71 @@
 	margin: auto;
 	margin-top: 50px;
 }
-
+*/
+/*
 .profile-editform form {
 	display: inline-block;
 	margin: 0;
 }
-
-.profile-editform form p {
+*/
+/*
+.profile-editform form label {
 	border: 1px solid black;
 	display: inline-block;
 	margin-right: 5px;
 	height: 100%;
+}
+*/
+
+.profile-editform {
+	width: 90%;
+	text-align: center;
+	margin: 50px auto;
+}
+
+.profile-editform #biography, #avatar, #banner {
+	--border: 1px solid black;
+	display: inline-block;
+	width: 100%;
+
+}
+
+.profile-editform #avatar label, #banner label{
+	--border: 1px solid black;
+	display: block;
+}
+
+.profile-editform #avatar #avatarupload, #banner #bannerupload{
+	--border: 1px solid black;
+	display: block;
+	margin: 0 auto;
+	width: 80%;
+}
+
+.profile-editform #avatar .btn, #banner .btn{
+	--border: 1px solid black;
+	display: block;
+	float: right;
+}
+
+.profile-editform #biography label {
+	--border: 1px solid black;
+	display: inline-block;
+}
+
+.profile-editform #biography textarea {
+	margin: auto;
+	display: inline-block;
+}
+
+.profile-editform #biography input {
+	--border: 1px solid black;
+	display: inline-block;
+	float: right;
+}
+
+@media (min-width: 992px) {
+	.profile-editform {
+		width: 40%;
+	}
 }

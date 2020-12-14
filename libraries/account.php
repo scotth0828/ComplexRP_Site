@@ -1,105 +1,88 @@
-<?php 
+<?php
 
-include 'DB.php';
-include 'cookies.php';
+require_once 'libraries/DB.php';
 
-class account {
+class Account {
+	
+	public const ID = 0;
+	public const USERNAME = 1;
+	public const EMAIL = 2;
+	public const AVATAR = 3;
 
-	protected $DB;
-	protected $cookies;
+	public static function verify($username, $password) {
 
-	public function __construct() {
-		$this->DB = new DB();
-		$this->cookies = new cookies();
-
-		$this->createLoginTokensTable();
-		$this->createUserTable();
-
-	}
-
-	function verify($username, $password) {
-		if ($this->DB::query('SELECT username FROM users WHERE username=:username', array(':username'=>$username))) {
-			$query = $this->DB::query('SELECT password FROM users WHERE username=:username', array(':username'=>$username));
-			if (password_verify($password, $query[0]['password']))
+		$data = DB::getData('accounts', 'Username', 'username', $username);
+		if ($data != NULL) {
+			$pass = DB::getData('accounts', 'Password', 'username', $username);
+			if (password_verify($password, $pass))
 				return true;
 			return false;
 		}
+
 		return false;
 	}
 
-	function getUsername($userid) {
-		return DB::query('SELECT username FROM users WHERE id=:id LIMIT 1', array(':id'=>$userid))[0]['username'];
-	}
-
-	function getAvatar($userid) {
-		return DB::query('SELECT profileimg FROM users WHERE id=:id LIMIT 1', array(':id'=>$userid))[0]['profileimg'];
-	}
-
-	function getID() {
-		$cookie = $this->cookies->getCookie('SNID');
+	public static function isLoggedIn() {
+		$cookie = cookies::getCookie('SNID');
 		if ($cookie != NULL) {
-			$enct = $this->encryptedToken($cookie);
-			$query = $this->DB::query('SELECT user_id FROM logintokens WHERE value=:token LIMIT 1', array(':token'=>$enct));
-			return $query[0]['user_id'];
-		}
-		return 0;
-	}
+			$enct = self::encryptedToken($cookie);
 
-	function isLoggedIn() {
-		$cookie = $this->cookies->getCookie('SNID');
-		if ($cookie != NULL) { 
-			$enct = $this->encryptedToken($cookie);
-			$query = $this->DB::query('SELECT id FROM logintokens WHERE value=:token LIMIT 1', array(':token'=>$enct));	
+			$query = DB::getData('logintokens', 'id', 'value', $enct);
 			if ($query)
 				return true;
 		}
 		return false;
 	}
 
-	function signOut() {
-		$cookie = $this->cookies->getCookie('SNID');
+	public static function signOut() {
+		$cookie = cookies::getCookie('SNID');
 		if ($cookie != null) {
-			$enct = $this->encryptedToken($cookie);
-			$this->DB::query('DELETE FROM logintokens WHERE value=:token', array(':token'=>$enct));
-			$this->cookies->removeCookie('SNID');
+			$enct = self::encryptedToken($cookie);
+			DB::deleteData('logintokens', 'value', $enct);
+			cookies::removeCookie('SNID');
 			return true;
 		}
 		return false;
 	}
 
-	public function createLoginTokensTable() {
-		try {
-			$this->DB::query('CREATE TABLE logintokens (
-				id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-				value VARCHAR(255) NOT NULL,
-				user_id INT(6) NOT NULL 
-		)');
-			return true;
-		} catch (Exception $e) {
-			return false;
+	public static function getData($type, $id = 0) {
+		if ($id == 0)
+			$id = self::getID();
+
+		if ($type == self::ID) {
+			return $id;
+		}
+		elseif ($type == self::USERNAME) {
+			return DB::getData('accounts', 'Username', 'id', $id);
+		}
+		elseif ($type == self::EMAIL) {
+			return DB::getData('accounts', 'Email', 'id', $id);
+		}
+		elseif ($type == self::AVATAR) {
+			$a = DB::getData('accounts', 'Profileimg', 'id', $id);
+			if ($a == NULL)
+				return 'images/default_avatar.jpg';
+			else
+				return $a;
 		}
 	}
 
-	public function createUserTable() {
-		try {
-			$this->DB::query('CREATE TABLE users (
-			id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-			username VARCHAR(32) NOT NULL,
-			password VARCHAR(60) NOT NULL,
-			email TEXT NOT NULL,
-			role VARCHAR(32) NOT NULL,
-			birthdate DATE NOT NULL,
-			verified TINYINT(1) NOT NULL,
-			profileimg VARCHAR(255)
-
-			)');
-			return true;
-		} catch (Exception $e) {
-			return false;
-		}
+	public static function getIDFromType($type, $value) {
+		if ($type == self::USERNAME)
+			return DB::getData('accounts', 'id', 'Username', $value);
+		elseif ($type == self::EMAIL)
+			return DB::getData('accounts', 'id', 'Email', $value);
+		return NULL;
 	}
 
-	public function createToken() {
+	public static function setVerified($id = 0) {
+		if ($id == 0)
+			$id = self::getID();
+
+		DB::updateData('accounts', array('Verified'=>'1'), 'id', $id);
+	}
+
+	public static function createToken() {
 		try {
 			$cstrong = true;
 			$token = bin2hex(openssl_random_pseudo_bytes(64, $cstrong));
@@ -109,28 +92,37 @@ class account {
 		}
 	}
 
-	public function encryptedToken($token) {
+	public static function createLoginCookies($userid) {
+		try {
+			$token = self::createToken();
+			$encryptedToken = self::encryptedToken($token);
+			cookies::setCookie('SNID', $token, cookies::TIME_HOUR);
+			if (DB::getData('logintokens', 'id', 'user_id', $userid) != NULL) {
+				DB::updateData('logintokens', array('value'=>$encryptedToken), 'user_id', $userid);
+			} else {
+				DB::setData('logintokens', array('value'=>$encryptedToken, 'user_id'=>$userid));
+			}
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+	private function getID() {
+		$cookie = cookies::getCookie('SNID');
+		if ($cookie != NULL) {
+			$enct = self::encryptedToken($cookie);
+			return DB::getData('logintokens', 'user_id', 'value', $enct);
+		}
+		return 0;
+	}
+
+	private function encryptedToken($token) {
 		try {
 			$enc = sha1($token);
 			return $enc;
 		} catch(Exception $e) {
 			return null;
-		}
-	}
-
-	public function createLoginCookies($userid) {
-		try {
-			$token = $this->createToken();
-			$encryptedToken = $this->encryptedToken($token);
-			$this->cookies->setCookie('SNID', $token, $this->cookies->TIME_HOUR);
-			if ($this->DB::query('SELECT id FROM logintokens WHERE user_id=:userid LIMIT 1', array(':userid'=>$userid))) {
-				$this->DB::query('UPDATE logintokens SET value=:enctoken WHERE user_id=:userid', array(':enctoken'=>$encryptedToken, ':userid'=>$userid));
-			} else {
-				$this->DB::query('INSERT INTO logintokens VALUES (\'\', :token, :user_id)', array(':token'=>$encryptedToken, ':user_id'=>$userid));
-			}
-			return true;
-		} catch (Exception $e) {
-			return false;
 		}
 	}
 }

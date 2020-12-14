@@ -1,10 +1,10 @@
 <?php
+include 'libraries/cookies.php';
 include 'libraries/account.php';
 
 if (isset($_POST['register'])) {
 
-	$acc = new account();
-	$acc->createUserTable();
+	DB::createUserTable();
 
 	$email = $_POST['email'];
 	$username = $_POST['username'];
@@ -18,11 +18,11 @@ if (isset($_POST['register'])) {
 			// enough characters
 			if (preg_match('/[a-zA-Z0-9_]+/', $username)) {
 				// Username matches regex.
-				if (!DB::query('SELECT username FROM users WHERE username=:username', array(':username'=>$username))) {
+				if (DB::getData('accounts', 'username', 'username', $username) == NULL) {
 					// Username does not exist. Continue.
 					if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 						// Email is valid
-						if (!DB::query('SELECT email FROM users WHERE email=:email', array(':email'=>$email))) {
+						if (DB::getData('accounts', 'email', 'username', $username) == NULL) {
 							// Email does not exist! Continue.
 							if (strlen($password) >= 6 && strlen($password) <= 60) {
 								// password within size.
@@ -36,13 +36,17 @@ if (isset($_POST['register'])) {
 										// Passwords match. Continue.
 										if (userAge($birthdate) >= 13) {
 											// User is old enough. Continue.
-											DB::query('INSERT INTO users VALUES (\'\', :username, :password, :email, :role, :birthday, :verified, :profileimg)', array(':username'=>$username, ':password'=>password_hash($password, PASSWORD_BCRYPT),':email'=>$email, ':role'=>'member', ':birthday'=>$birthdate, ':verified'=>'0', ':profileimg'=>''));
+											$timestamp = date('Y-m-d h-m-s');
+											$hash = password_hash($password, PASSWORD_BCRYPT);
+											DB::setData('accounts', array('RegistrationDate'=>$timestamp, 'Username'=>$username, 'Password'=>$hash, 'Email'=>$email, 'Role'=>'member', 'BirthDate'=>$birthdate, 'Verified'=>'0', 'ProfileImg'=>''));
 
 											// ACCOUNT CREATED AND LOGGED IN
-											$userid = DB::query('SELECT id FROM users WHERE username=:username', array(':username'=>$username));
-											$acc->createLoginCookies($userid);
+
+											$user_id = Account::getIDFromType(Account::USERNAME, $username);
+											Account::createLoginCookies($user_id);
 
 											header('Location: index.php');
+											die();
 										} else {
 											ErrorMessage('You are too young to make an account with us!');
 										}

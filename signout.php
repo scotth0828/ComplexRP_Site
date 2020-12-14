@@ -1,5 +1,5 @@
 <?php
+require 'libraries/cookies.php';
 require 'libraries/account.php';
-$acc = new account();
-$acc->signOut();
+Account::signOut();
 header('Location: index.php');

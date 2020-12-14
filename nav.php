@@ -23,7 +23,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <?php
-      if (!$acc->isLoggedIn()) {
+      if (!Account::isLoggedIn()) {
       ?>
         <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a></li>
         <li class="nav-item"><a class="nav-link" href="signup.php"><i class="fas fa-user-plus"></i> Sign Up</a></li>
@@ -34,9 +34,10 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="dropdown-user-menu-item">
           <?php 
-          $id = $acc->getID();
-          $username = $acc->getUsername($id);
-          $avatar = $acc->getAvatar($id);
+          $id = Account::getData(Account::ID);
+          $username = Account::getData(Account::USERNAME);
+          $avatar = Account::getData(Account::AVATAR);
+          
           echo '<img id="avatar" src="'.$avatar.'"></img>';
           echo '<p>'.$username.'</p>';
 

@@ -4,14 +4,15 @@
 
 <!-- FILLER -->
 <?php
-if ($acc->isLoggedIn()) {
+
+if (Account::IsLoggedIn()) {
 
 ?>
 
 <!-- CONTENT -->
 
 <div class="content">
-<div class="welcomemessage"><p>Welcome Back, <?php echo $acc->getUsername($acc->getID()); ?>!</p></div>
+<div class="welcomemessage"><p>Welcome Back, <?php echo Account::getData(Account::USERNAME); ?>!</p></div>
 
 <!-- -->
 

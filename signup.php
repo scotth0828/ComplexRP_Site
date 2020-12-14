@@ -1,6 +1,8 @@
 <?php include 'header.php';
 
-if ($acc->isLoggedIn())
+DB::createUserTable();
+
+if (Account::isLoggedIn())
 	header('Location: index.php');
 
 function getValue($key) {

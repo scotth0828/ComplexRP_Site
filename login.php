@@ -1,9 +1,9 @@
 <?php include 'header.php';
 
-if ($acc->isLoggedIn())
+if (Account::isLoggedIn())
 	header('Location: index.php');
 
-$remember = $cookie->getCookie('remembermeusername');
+$remember = cookies::getCookie('remembermeusername');
 
 function getValue($key) {
 	$url = $_SERVER['QUERY_STRING'];

@@ -5,10 +5,7 @@ if (isset($_POST['submit'])) {
 	require_once 'libraries/account.php';
 	require_once 'libraries/cookies.php';
 
-	$acc = new account();
-	$acc->createLoginTokensTable();
-
-	$cookie = new cookies();
+	DB::createLoginTokensTable();
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -19,24 +16,25 @@ if (isset($_POST['submit'])) {
 	} catch(Exception $e) {$rememberme = false;}
 
 	if (!empty($username) || !empty($password)) {
-		if ($acc->verify($username, $password)) {
-			// account verified
+		$val = Account::verify($username, $password);
+		if (Account::verify($username, $password)) {
+			// account verified 
 
 			if($rememberme)
-				$cookie->setCookie('remembermeusername', $username, $cookie->TIME_MONTH);
+				cookies::setCookie('remembermeusername', $username, cookies::TIME_MONTH);
 			else
-				$cookie->removeCookie('remembermeusername');
+				cookies::removeCookie('remembermeusername');
 				
+			$user_id = Account::getIDFromType(Account::USERNAME, $username);
 
-			$user_id = DB::query('SELECT id FROM users WHERE username=:username', array(':username'=>$username))[0]['id'];
-			$acc->createLoginCookies($user_id);
+			Account::createLoginCookies($user_id);
 
 			header('Location: index.php');
+			die();
 		}
 	}
-	echo '<script>alert("this is true");</script>';
-			$cookie->removeCookie('remembermeusername');
-			ErrorMessage('Account credentials incorrect or account does not exist!');
+	cookies::removeCookie('remembermeusername');
+	ErrorMessage('Account credentials incorrect or account does not exist!' . $val);
 }
 
 function ErrorMessage($message) {

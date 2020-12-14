@@ -1,7 +1,6 @@
 <?php
-require 'libraries/account.php';
-$acc = new account();
-$cookie = new cookies();
+require 'libraries/Account.php';
+require 'libraries/cookies.php';
 ?>
 <!DOCTYPE html>
 	<html>
