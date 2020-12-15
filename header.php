@@ -1,6 +1,7 @@
 <?php
 require 'libraries/Account.php';
 require 'libraries/cookies.php';
+
 ?>
 <!DOCTYPE html>
 	<html>

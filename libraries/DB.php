@@ -27,22 +27,44 @@ class DB {
 	}
 
 	public static function getData($table, $value, $identifier, $identifiervalue) {
-		$a = array();
-		$a[':'.$identifier] = $identifiervalue;
-		$query = self::query('SELECT ' . $value . ' FROM ' . $table . ' WHERE ' . $identifier . '=:' . $identifier, $a);
+		$identifiers = array();
+
+		$v = '*';
+		if ($value != '') $v = $value;
+		$q = 'SELECT ' . $v . ' FROM ' . $table . ' WHERE ';
+
+		for ($i = 2; $i < func_num_args(); $i+=2) {
+			if ($i == 2) {
+				$q = $q . func_get_arg($i) . '=:' . func_get_arg($i);
+			} else {
+				$q = $q . ' AND ' . func_get_arg($i) . '=:' . func_get_arg($i);
+			}
+
+			$identifiers[':' . func_get_arg($i)] = func_get_arg($i+1);
+		}
+
+		$query = self::query($q, $identifiers);
 
 		if (!count($query))
 			return NULL;
 
-		return $query[0][$value];
+		if (count($query) == 1) {
+			if ($v == '*')
+				return $query[0];
+			else
+				return $query[0][$v];
+		} else {
+			return $query;
+		}
+
 	}
 
 	public static function updateData($table, $data, $identifier, $identifiervalue) {
-
 		if (count($data) < 1) return false;
 
 		$q = 'UPDATE ' . $table . ' SET ';
-		$a = array();
+
+		$identifiers = array();
 
 		foreach ($data as $key => $value) {
 			if (count($data) <= 1)
@@ -53,41 +75,69 @@ class DB {
 				else
 					$q = $q . $key . '=:' . $key . ', ';
 
-			$a[$key] = $value;
+			$identifiers[':'.$key] = $value;
 		}
 
-		$q = $q . ' WHERE ' . $identifier . '=:' . $identifier;
-		$a[$identifier] = $identifiervalue;
+		$q = $q . ' WHERE ';
 
-		self::query($q, $a);
+		
 
-		return true;		
+		for ($i = 2; $i < func_num_args(); $i+=2) {
+			if ($i == 2) {
+				$q = $q . func_get_arg($i) . '=:' . func_get_arg($i);
+			} else {
+				$q = $q . ' AND ' . func_get_arg($i) . '=:' . func_get_arg($i);
+			}
+
+			$identifiers[':' . func_get_arg($i)] = func_get_arg($i+1);
+		}
+
+		self::query($q, $identifiers);
+
+		return true;
 	}
 
-	public static function setData($table, $data) {
-		$q = 'INSERT INTO ' . $table . ' VALUES ' . '(\'\'';
+	public static function setData($table, $data, $primarykey = true) {
+		$q = '';
+		if ($primarykey) 
+			$q = 'INSERT INTO ' . $table . ' VALUES ' . '(\'\', ';
+		else
+			$q = 'INSERT INTO ' . $table . ' VALUES ' . '(';
+
 		$a = array();
 
 		foreach ($data as $key => $value) {
 			if (count($data) <= 1)
-				$q = $q . ', :' . $key . ')';
+				$q = $q . ':' . $key . ')';
 			else
 				if ($data[$key] == $value && end($data) == $value)
-					$q = $q . ', :' . $key . ')';
+					$q = $q . ' :' . $key . ')';
 				else
-					$q = $q . ', :' . $key;
+					$q = $q . ':' . $key . ', ';
 
 			$a[$key] = $value;
 		}
-
 		self::query($q, $a);
 	}
 
 	public static function deleteData($table, $identifier, $identifiervalue) {
-		$q = 'DELETE FROM ' . $table . ' WHERE ' . $identifier . '=:' . $identifier;
-		$a = array($identifier=>$identifiervalue);
+		$identifiers = array();
 
-		self::query($q, $a);
+		$q = 'DELETE FROM ' . $table . ' WHERE ';
+
+		for ($i = 1; $i < func_num_args(); $i+=2) {
+			if ($i == 1) {
+				$q = $q . func_get_arg($i) . '=:' . func_get_arg($i);
+			} else {
+				$q = $q . ' AND ' . func_get_arg($i) . '=:' . func_get_arg($i);
+			}
+
+			$identifiers[':' . func_get_arg($i)] = func_get_arg($i+1);
+		}
+
+		
+
+		self::query($q, $identifiers);
 	}
 
 	public static function createLoginTokensTable() {
@@ -116,6 +166,20 @@ class DB {
 			Verified TINYINT(1) NOT NULL,
 			ProfileImg VARCHAR(255)
 
+			)');
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+	public static function createFollowerTable() {
+		try {
+			self::query(
+				'CREATE TABLE followers (
+				user_id INT(6) NOT NULL,
+				follower_id INT(6) NOT NULL,
+				blocked INT(1) NOT NULL
 			)');
 			return true;
 		} catch (Exception $e) {

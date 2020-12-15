@@ -2,6 +2,11 @@
 include 'header.php'; 
 include 'libraries/Image.php';
 
+if (!Account::isLoggedIn()) {
+	header('Location: index.php');
+	die();
+}
+
 $id = Account::getData(Account::ID);
 echo $id;
 if (isset($_POST['submitAvatar']))

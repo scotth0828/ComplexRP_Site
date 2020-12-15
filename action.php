@@ -1,6 +1,62 @@
 <?php
-include 'libraries/cookies.php';
-include 'libraries/account.php';
+
+require 'libraries/cookies.php';
+require 'libraries/account.php';
+
+if ($_GET['code'] == 'signout') {
+	Account::signOut();
+	header('Location: index.php');
+}
+
+if (isset($_POST['follow'])) {
+	$userfollowed = $_POST['user'];
+	$id = Account::getIDFromType(Account::USERNAME, $userfollowed);
+	Account::followUser($id);
+	header('Location: profile.php?profile='.$userfollowed);
+	die();
+}
+
+if (isset($_POST['block'])) {
+	$userfollowed = $_POST['user'];
+	$id = Account::getIDFromType(Account::USERNAME, $userfollowed);
+	Account::blockUser($id);
+	header('Location: profile.php?profile='.$userfollowed);
+	die();	
+}
+
+if (isset($_POST['loginaccount'])) {
+
+	DB::createLoginTokensTable();
+
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$rememberme = '';
+
+	try {
+		if (!isset($_POST['rememberme'])) $rememberme = false; else $rememberme = true;
+	} catch(Exception $e) {$rememberme = false;}
+
+	if (!empty($username) || !empty($password)) {
+		$val = Account::verify($username, $password);
+		if (Account::verify($username, $password)) {
+			// account verified 
+
+			if($rememberme)
+				cookies::setCookie('remembermeusername', $username, cookies::TIME_MONTH);
+			else
+				cookies::removeCookie('remembermeusername');
+				
+			$user_id = Account::getIDFromType(Account::USERNAME, $username);
+
+			Account::createLoginCookies($user_id);
+
+			header('Location: index.php');
+			die();
+		}
+	}
+	cookies::removeCookie('remembermeusername');
+	LoginErrorMessage('Account credentials incorrect or account does not exist!' . $val);
+}
 
 if (isset($_POST['register'])) {
 
@@ -48,39 +104,39 @@ if (isset($_POST['register'])) {
 											header('Location: index.php');
 											die();
 										} else {
-											ErrorMessage('You are too young to make an account with us!');
+											RegisterErrorMessage('You are too young to make an account with us!');
 										}
 									} else {
-										ErrorMessage('Passwords do not match!');
+										RegisterErrorMessage('Passwords do not match!');
 									}
 								} else {
-									ErrorMessage('Password must have an uppercase letter, a lowercase letter, a special character, and be greater than 8 characters!');
+									RegisterErrorMessage('Password must have an uppercase letter, a lowercase letter, a special character, and be greater than 8 characters!');
 								}
 							} else {
-								ErrorMessage('Too little or too many characters for a password!');
+								RegisterErrorMessage('Too little or too many characters for a password!');
 							}
 						} else {
-							ErrorMessage('Email already exists!');
+							RegisterErrorMessage('Email already exists!');
 						}
 					} else {
-						ErrorMessage('Email is not valid!');
+						RegisterErrorMessage('Email is not valid!');
 					}
 				} else {
-					ErrorMessage('This username already exist!');
+					RegisterErrorMessage('This username already exist!');
 				}
 			} else {
-				ErrorMessage('Username may only be alphanumeric!');
+				RegisterErrorMessage('Username may only be alphanumeric!');
 			}
 		} else {
-			ErrorMessage('Too little or too many characters for a username!');
+			RegisterErrorMessage('Too little or too many characters for a username!');
 		}
 	} else {
-		ErrorMessage('One or multiple fields empty!');
+		RegisterErrorMessage('One or multiple fields empty!');
 	}
 
 }
 
-function ErrorMessage($errmessage) {
+function RegisterErrorMessage($errmessage) {
 	$username = urlencode($_POST['username']);
 	$email = $_POST['email'];
 	$birthdate = $_POST['birthdate'];
@@ -90,6 +146,11 @@ function ErrorMessage($errmessage) {
 
 
 	header('Location: signup.php?'.urlencode($message));
+}
+
+function LoginErrorMessage($message) {
+	$m = 'enc=true&errormessage='.$message;
+	header('Location: login.php?'.$m);
 }
 
 function passwordStrength($password) {

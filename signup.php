@@ -24,7 +24,7 @@ function getValue($key) {
 <div class="content container text-center">
 
 <div class="col-md-4 col-md-offset-4 loginform">
-	<form action="createaccount.php" method="POST">
+	<form action="action.php" method="POST">
 		<label id="signinlabel">Sign Up</label>
 		<div class="loginErrorMessage"><p><?php echo getValue('errormessage'); ?></p></div>
 		<div class="form-group">

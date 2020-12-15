@@ -24,7 +24,7 @@ function getValue($key) {
 <div class="content container text-center">
 
 <div class="col-md-4 col-md-offset-4 loginform">
-	<form action="loginaccount.php" method="POST">
+	<form action="action.php" method="POST">
 		<label id="signinlabel">Sign In</label>
 		<div class="loginErrorMessage"><p><?php echo getValue('errormessage'); ?></p></div>
 		<div class="form-group">
@@ -46,7 +46,7 @@ function getValue($key) {
 		<div class="fplink">
 			<a href="#">Forgot Password?</a>
 		</div>
-		<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+		<button name="loginaccount" type="submit" class="btn btn-primary">Submit</button>
 	</form>
 </div>
 
